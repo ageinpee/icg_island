@@ -49,7 +49,7 @@ class Island {
 		this.verticesVBO = gl.createBuffer();
 		this.colorVBO = gl.createBuffer();
 		this.modelMatrix = this.SetModelMatrix(this.position, this.orientation);
-
+		
 		this.MakeModel();
 		this.InitBuffer();
 	}
@@ -60,7 +60,19 @@ class Island {
 	MakeModel () {
 		//adding the Islands-Positions to the Mesh. 
 		this.mesh = this.mesh.concat(island);
-		this.normals = this.normals.concat(island_normals);
+		
+		for (var i = 0; i < island_normals.length; i+=3){
+			this.normals = this.normals.concat(island_normals[i]);
+			this.normals = this.normals.concat(island_normals[i+1]);
+			this.normals = this.normals.concat(island_normals[i+2]);
+			this.normals = this.normals.concat(island_normals[i]);
+			this.normals = this.normals.concat(island_normals[i+1]);
+			this.normals = this.normals.concat(island_normals[i+2]);
+			this.normals = this.normals.concat(island_normals[i]);
+			this.normals = this.normals.concat(island_normals[i+1]);
+			this.normals = this.normals.concat(island_normals[i+2]);
+		}
+		
 		for (var i=0; i<this.mesh.length/3; i++)
 		{
 			this.ambientR = this.ambientR.concat([0.9,0.6,0.2,1.0]);
@@ -122,7 +134,7 @@ class Island {
 
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
-		gl.vertexAttribPointer(normalLoc, 1, gl.FLOAT, false, 0, this.mesh.length*4);
+		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, this.mesh.length*4);
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(normalLoc);
 
@@ -158,7 +170,19 @@ class Ocean {
 	MakeModel () {
 		//adding the Ocean-Positions to the Mesh. 
 		this.mesh = this.mesh.concat(ocean);
-		this.normals = this.normals.concat(ocean_normals);
+		
+		for (var i = 0; i < ocean_normals.length; i+=3){
+			this.normals = this.normals.concat(ocean_normals[i]);
+			this.normals = this.normals.concat(ocean_normals[i+1]);
+			this.normals = this.normals.concat(ocean_normals[i+2]);
+			this.normals = this.normals.concat(ocean_normals[i]);
+			this.normals = this.normals.concat(ocean_normals[i+1]);
+			this.normals = this.normals.concat(ocean_normals[i+2]);
+			this.normals = this.normals.concat(ocean_normals[i]);
+			this.normals = this.normals.concat(ocean_normals[i+1]);
+			this.normals = this.normals.concat(ocean_normals[i+2]);
+		}
+		
 		for (var i = 0; i < this.mesh.length/3; i++)
 		{
 			this.ambientR = this.ambientR.concat([0.05,0.3,0.5,1.0]);
@@ -220,7 +244,7 @@ class Ocean {
 
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
-		gl.vertexAttribPointer(normalLoc, 1, gl.FLOAT, false, 0, this.mesh.length*4);
+		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, this.mesh.length*4);
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(normalLoc);
 
@@ -256,7 +280,19 @@ class Palmtree {
 	MakeModel () {
 		//adding the palm-trees positions to the mesh 
 		this.mesh = this.mesh.concat(palmtree);
-		this.normals = this.normals.concat(palmtree_normals);
+		
+		for (var i = 0; i < palmtree_normals.length; i+=3){
+			this.normals = this.normals.concat(palmtree_normals[i]);
+			this.normals = this.normals.concat(palmtree_normals[i+1]);
+			this.normals = this.normals.concat(palmtree_normals[i+2]);
+			this.normals = this.normals.concat(palmtree_normals[i]);
+			this.normals = this.normals.concat(palmtree_normals[i+1]);
+			this.normals = this.normals.concat(palmtree_normals[i+2]);
+			this.normals = this.normals.concat(palmtree_normals[i]);
+			this.normals = this.normals.concat(palmtree_normals[i+1]);
+			this.normals = this.normals.concat(palmtree_normals[i+2]);
+		}
+		
 		for (var i = 0; i < this.mesh.length/3; i++)
 		{
 			this.ambientR = this.ambientR.concat([0.33,0.21,0.1,1.0]);
@@ -320,7 +356,7 @@ class Palmtree {
 
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
-		gl.vertexAttribPointer(normalLoc, 1, gl.FLOAT, false, 0, this.mesh.length*4);
+		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, this.mesh.length*4);
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(normalLoc);
 
@@ -355,7 +391,19 @@ class Palmleaf {
 	MakeModel () {
 		//adding the leafs positions to the Mesh. 
 		this.mesh = this.mesh.concat(palmleaf);
-		this.normals = this.normals.concat(palmleaf_normals);
+		
+		for (var i = 0; i < palmleaf_normals.length; i+=3){
+			this.normals = this.normals.concat(palmleaf_normals[i]);
+			this.normals = this.normals.concat(palmleaf_normals[i+1]);
+			this.normals = this.normals.concat(palmleaf_normals[i+2]);
+			this.normals = this.normals.concat(palmleaf_normals[i]);
+			this.normals = this.normals.concat(palmleaf_normals[i+1]);
+			this.normals = this.normals.concat(palmleaf_normals[i+2]);
+			this.normals = this.normals.concat(palmleaf_normals[i]);
+			this.normals = this.normals.concat(palmleaf_normals[i+1]);
+			this.normals = this.normals.concat(palmleaf_normals[i+2]);
+		}
+		
 		for(var i = 0; i < this.mesh.length/3; i++)
 		{
 			this.ambientR = this.ambientR.concat([0.0,0.7,0.0,1.0]);
@@ -414,7 +462,7 @@ class Palmleaf {
 
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
-		gl.vertexAttribPointer(normalLoc, 1, gl.FLOAT, false, 0, this.mesh.length*4);
+		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, this.mesh.length*4);
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(normalLoc);
 
