@@ -21,7 +21,8 @@ let pointLoc,
 	normalLoc,
 	ambientRLoc,
 	diffuseRLoc,
-	specularRLoc;
+	specularRLoc,
+	texCoordLoc;
 
 let modelMatrixLoc;
 
@@ -42,6 +43,7 @@ class Island {
 	constructor () {
 		this.mesh = [];
 		this.normals = [];
+		this.textureCoordinates = [];
 		this.ambientR = [];
 		this.diffuseR = [];
 		this.orientation = {x: 0, y: 0, z: 0};
@@ -78,6 +80,11 @@ class Island {
 			this.ambientR = this.ambientR.concat([0.9,0.6,0.2,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.47,0.25,0.01,1.0]);
 		}
+		
+		// this.textureCoordinates = ...
+		// Versuch: Texturkoordinaten = Mesh setzen. Welches Ergebnis? 
+		// Versuch: Texturkoordinaten = (1|0),(0|0),(0|1) oder (1|1) setzen. Welches Ergebnis?
+		// Im Zweifel: Texturkoordinaten berechnen lassen per Blender
 	}
 	
 	/**
@@ -106,7 +113,7 @@ class Island {
 		gl.useProgram(program);
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
 
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.mesh.concat(this.normals)), gl.STATIC_DRAW);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.mesh.concat(this.normals.concat(this.textureCoordinates))), gl.STATIC_DRAW);
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.colorVBO);
 
@@ -130,15 +137,17 @@ class Island {
 		gl.enableVertexAttribArray(ambientRLoc);
 		gl.enableVertexAttribArray(diffuseRLoc);
 		// Bind the program and the vertex buffer object
+		
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
 
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, this.mesh.length*4);
+		gl.vertexAttribPointer(texCoordLoc, 2 gl.FLOAT, flase, 0 (this.mesh.length + this.normals.length)*4);
+		
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(normalLoc);
-
-
+		gl.enableVertexAttribArray(texCoordLoc);
 
 		// Set uniforms
 		this.UpdateBuffer();
@@ -152,6 +161,7 @@ class Ocean {
 	constructor () {
 		this.mesh = [];
 		this.normals = [];
+		this.textureCoordinates = [];
 		this.ambientR = [];
 		this.diffuseR = [];
 		this.orientation = {x: 0, y: 0, z: 0};
@@ -188,6 +198,11 @@ class Ocean {
 			this.ambientR = this.ambientR.concat([0.05,0.3,0.5,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.01,0.52,0.53,1.0]);
 		}
+		
+		// this.textureCoordinates = ...
+		// Versuch: Texturkoordinaten = Mesh setzen. Welches Ergebnis? 
+		// Versuch: Texturkoordinaten = (1|0),(0|0),(0|1) oder (1|1) setzen. Welches Ergebnis?
+		// Im Zweifel: Texturkoordinaten berechnen lassen per Blender
 	}
 	
 	/**
@@ -216,7 +231,7 @@ class Ocean {
 		gl.useProgram(program);
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
 
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.mesh.concat(this.normals)), gl.STATIC_DRAW);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.mesh.concat(this.normals.concat(this.textureCoordinates))), gl.STATIC_DRAW);
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.colorVBO);
 
@@ -239,16 +254,18 @@ class Ocean {
 		gl.vertexAttribPointer(diffuseRLoc, 4, gl.FLOAT, false, 0, this.ambientR.length*4);
 		gl.enableVertexAttribArray(ambientRLoc);
 		gl.enableVertexAttribArray(diffuseRLoc);
+		
 		// Bind the program and the vertex buffer object
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
 
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, this.mesh.length*4);
+		gl.vertexAttribPointer(texCoordLoc, 2, gl.FLOAT, flase, 0, (this.mesh.length + this.normals.length)*4);
+		
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(normalLoc);
-
-
+		gl.enableVertexAttribArray(texCoordLoc);
 
 		// Set uniforms
 		this.UpdateBuffer();
@@ -262,6 +279,7 @@ class Palmtree {
 	constructor () {
 		this.mesh = [];
 		this.normals = [];
+		this.textureCoordinates = [];
 		this.ambientR = [];
 		this.diffuseR = [];
 		this.orientation = {x: -90, y: 0, z: 0};
@@ -298,6 +316,11 @@ class Palmtree {
 			this.ambientR = this.ambientR.concat([0.33,0.21,0.1,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.46,0.26,0.09,1.0]);
 		}
+		
+		// this.textureCoordinates = ...
+		// Versuch: Texturkoordinaten = Mesh setzen. Welches Ergebnis? 
+		// Versuch: Texturkoordinaten = (1|0),(0|0),(0|1) oder (1|1) setzen. Welches Ergebnis?
+		// Im Zweifel: Texturkoordinaten berechnen lassen per Blender
 	}
 	
 	/**
@@ -329,7 +352,7 @@ class Palmtree {
 		gl.useProgram(program);
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
 
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.mesh.concat(this.normals)), gl.STATIC_DRAW);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.mesh.concat(this.normals.concat(this.textureCoordinates))), gl.STATIC_DRAW);
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.colorVBO);
 
@@ -357,8 +380,11 @@ class Palmtree {
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, this.mesh.length*4);
+		gl.vertexAttribPointer(texCoordLoc, 3, gl.FLOAT, false, 0, (this.mesh.length + this.normals.length)*4);
+		
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(normalLoc);
+		gl.enableVertexAttribArray(texCoordLoc);
 
 
 		// Set uniforms
@@ -373,6 +399,7 @@ class Palmleaf {
 	constructor (orientation, position) {
 		this.mesh = [];
 		this.normals = [];
+		// erstmal keine Texturen einfügen
 		this.ambientR = [];
 		this.diffuseR = [];
 		this.orientation = orientation;
@@ -480,6 +507,36 @@ class Palmleaf {
 		gl.drawArrays(gl.TRIANGLES, 0, this.mesh.length/3);
 	}
 }
+
+/**
+*
+*/
+function initTextures() {
+	sandTexture = gl.createTexture();
+	sandImage = new Image();
+	sandImage.onload = function () { handleTextureLoaded(sandImage, sandTexture); }
+	sandImage.src = "Texture/sand_diffuse.jpg";
+	
+	sandMapTexture = gl.createTexture();
+	sandMapImage = new Image();
+	sandMapImage.onload = function () {handleTextureLoaded(sandMapImage, sandMapTexture); }
+	sandMapImage.src = "Texture/sand_normal.jpg";
+}
+
+/**
+*
+*/
+function handleTextureLoaded(image, texture) {
+	//evtl. fehlt noch das Wrapping
+	
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+    gl.generateMipmap(gl.TEXTURE_2D);
+    gl.bindTexture(gl.TEXTURE_2D, null);
+}
+
 /**
  * Initializes the program, models and shaders
  */
@@ -507,10 +564,14 @@ function init() {
 	// 7 Save attribute location to address them
 	pointLoc = gl.getAttribLocation(program, "vPosition");
 	normalLoc = gl.getAttribLocation(program, "vNormal");
+	texCoordLoc = gl.getAttribLocation(program, "vTexCoord");
 	ambientRLoc = gl.getAttribLocation(program, "ambientR");
 	diffuseRLoc = gl.getAttribLocation(program, "diffuseR");
 	modelMatrixLoc = gl.getUniformLocation(program, "modelMatrix");
-
+	
+	diffuseMapLoc = gl.getUniformLocation(program, "diffuseMap");
+	normalMapLoc = gl.getUniformLocation(program, "normalMap");
+	
     // Set view matrix
 	//--> defined globally
 	vec3.add(target, eye, look);
@@ -523,9 +584,11 @@ function init() {
 	gl.uniformMatrix4fv(viewMatrixLoc, false, viewMatrix);
 
     // Set projection matrix
-
 	projectionMatrix = mat4.create();
 	mat4.perspective(projectionMatrix, Math.PI * 0.25, canvas.width / canvas.height, 0.005, 100);
+	
+	// Initialize Textures
+	initTextures();
 
 	// 7 Save uniform location and save the projection matrix into it
 	projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix");
@@ -538,7 +601,16 @@ function init() {
 function render()
 {
 	gl.clear(gl.normal_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
+	
+	// Connect Maps to Shader
+	gl.activeTexture(gl.TEXTURE0);
+	gl.bindTexture(gl.TEXTURE_2D, sandTexture);
+	gl.uniformli(diffuseMapLoc, 0);
+	
+	gl.activeTexture(gl.TEXTURE0);
+	gl.bindTexture(gl.TEXTURE_2D, sandMapTexture);
+	gl.uniformli(normalMapLoc, 0);
+	
 	// Call every render function
     objects.forEach(function(object) {
 		object.Render();
