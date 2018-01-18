@@ -143,7 +143,7 @@ class Island {
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, this.mesh.length*4);
-		gl.vertexAttribPointer(texCoordLoc, 2 gl.FLOAT, flase, 0 (this.mesh.length + this.normals.length)*4);
+		gl.vertexAttribPointer(texCoordLoc, 2, gl.FLOAT, false, 0, (this.mesh.length + this.normals.length)*4);
 		
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(normalLoc);
@@ -261,7 +261,7 @@ class Ocean {
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, this.mesh.length*4);
-		gl.vertexAttribPointer(texCoordLoc, 2, gl.FLOAT, flase, 0, (this.mesh.length + this.normals.length)*4);
+		gl.vertexAttribPointer(texCoordLoc, 2, gl.FLOAT, false, 0, (this.mesh.length + this.normals.length)*4);
 		
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(normalLoc);
@@ -605,11 +605,11 @@ function render()
 	// Connect Maps to Shader
 	gl.activeTexture(gl.TEXTURE0);
 	gl.bindTexture(gl.TEXTURE_2D, sandTexture);
-	gl.uniformli(diffuseMapLoc, 0);
+	gl.uniform1i(diffuseMapLoc, 0);
 	
 	gl.activeTexture(gl.TEXTURE0);
 	gl.bindTexture(gl.TEXTURE_2D, sandMapTexture);
-	gl.uniformli(normalMapLoc, 0);
+	gl.uniform1i(normalMapLoc, 0);
 	
 	// Call every render function
     objects.forEach(function(object) {
