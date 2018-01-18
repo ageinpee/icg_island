@@ -84,7 +84,23 @@ class Island {
 		// this.textureCoordinates = ...
 		// Versuch: Texturkoordinaten = Mesh setzen. Welches Ergebnis? 
 		// Versuch: Texturkoordinaten = (1|0),(0|0),(0|1) oder (1|1) setzen. Welches Ergebnis?
+		//
+		//		1|0 -------- 1|0
+		//			|      |
+		//			|      |
+		//			|      |
+		//		0|0 -------- 0|1
+		//
 		// Im Zweifel: Texturkoordinaten berechnen lassen per Blender
+		
+		for (var i=0; i < this.mesh.length/18; i++) {
+			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
+																	  0.0, 0.0,
+																	  1.0, 0.0]);
+			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
+																	  1.0, 1.0,
+																	  1.0, 0.0]);
+		}
 	}
 	
 	/**
