@@ -399,7 +399,7 @@ class Palmleaf {
 	constructor (orientation, position) {
 		this.mesh = [];
 		this.normals = [];
-		// erstmal keine Texturen einfügen
+		this.textureCoordinates = [];
 		this.ambientR = [];
 		this.diffuseR = [];
 		this.orientation = orientation;
