@@ -93,14 +93,14 @@ class Island {
 		//
 		// Im Zweifel: Texturkoordinaten berechnen lassen per Blender
 		
-		for (var i=0; i < this.mesh.length/18; i++) {
-			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
-																	  0.0, 0.0,
-																	  1.0, 0.0]);
-			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
-																	  1.0, 1.0,
-																	  1.0, 0.0]);
+		for (var x in this.mesh) {
+			if (x % 3 != 0) {
+				var temp = (this.mesh[x] + 1) / 2;
+				this.textureCoordinates = this.textureCoordinates.concat(temp);
+			}
 		}
+		console.log(this.mesh);
+		console.log(this.textureCoordinates);
 	}
 	
 	/**
@@ -215,6 +215,7 @@ class Ocean {
 			this.diffuseR = this.diffuseR.concat([0.01,0.52,0.53,1.0]);
 		}
 		
+		this.textureCoordinates = this.mesh;
 		// this.textureCoordinates = ...
 		// Versuch: Texturkoordinaten = Mesh setzen. Welches Ergebnis? 
 		// Versuch: Texturkoordinaten = (1|0),(0|0),(0|1) oder (1|1) setzen. Welches Ergebnis?
@@ -333,6 +334,7 @@ class Palmtree {
 			this.diffuseR = this.diffuseR.concat([0.46,0.26,0.09,1.0]);
 		}
 		
+		this.textureCoordinates = this.mesh;
 		// this.textureCoordinates = ...
 		// Versuch: Texturkoordinaten = Mesh setzen. Welches Ergebnis? 
 		// Versuch: Texturkoordinaten = (1|0),(0|0),(0|1) oder (1|1) setzen. Welches Ergebnis?
@@ -452,6 +454,8 @@ class Palmleaf {
 			this.ambientR = this.ambientR.concat([0.0,0.7,0.0,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.37,0.01,0.69,1.0]);
 		}
+
+		this.textureCoordinates = this.mesh;
 	}
 	
 	/**
@@ -531,12 +535,12 @@ function initTextures() {
 	sandTexture = gl.createTexture();
 	sandImage = new Image();
 	sandImage.onload = function () { handleTextureLoaded(sandImage, sandTexture); }
-	sandImage.src = "Texture/sand_diffuse.jpg";
+	sandImage.src = "Textures/sand_diffuse.jpg";
 	
 	sandMapTexture = gl.createTexture();
 	sandMapImage = new Image();
 	sandMapImage.onload = function () {handleTextureLoaded(sandMapImage, sandMapTexture); }
-	sandMapImage.src = "Texture/sand_normal.jpg";
+	sandMapImage.src = "Textures/sand_normal.jpg";
 }
 
 /**
@@ -623,7 +627,8 @@ function render()
 	gl.bindTexture(gl.TEXTURE_2D, sandTexture);
 	gl.uniform1i(diffuseMapLoc, 0);
 	
-	gl.activeTexture(gl.TEXTURE0);
+	//Connects NormalMap to Shader
+	gl.activeTexture(gl.TEXTURE1);
 	gl.bindTexture(gl.TEXTURE_2D, sandMapTexture);
 	gl.uniform1i(normalMapLoc, 0);
 	
