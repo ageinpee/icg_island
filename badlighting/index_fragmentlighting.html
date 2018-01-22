@@ -11,6 +11,7 @@
 			attribute vec4 diffuseR;
 			attribute vec2 vTexCoord;
 			
+			attribute float hasTexture;
 			uniform mat4 modelMatrix;
 			uniform mat4 viewMatrix;
 			uniform mat4 projectionMatrix;
@@ -29,6 +30,7 @@
 			varying vec4 ambient;
 			varying vec4 diffuse;
 			varying vec4 fNormal;
+			varying float hasTX;
 
 			void main()
 			{
@@ -36,6 +38,7 @@
 				normalMatrix1 = normalMatrix;
 				ambient = ambientR;
 				diffuse = diffuseR;
+				hasTX = hasTexture;
 				
 				// Pass tex coords to fragment shader
                 fTexCoord = vTexCoord;
@@ -61,11 +64,13 @@
 			varying vec3 cLight;
 			varying vec4 ambient;
 			varying vec4 diffuse;
+			varying float hasTX;
 			
 			varying mat4 normalMatrix1;
 			varying vec4 fNormal;
 
 			varying vec2 fTexCoord;
+
 
 			uniform sampler2D diffuseMap;
 			uniform sampler2D normalMap;
@@ -97,8 +102,15 @@
 
 				float distance = length(cLight - cPos);
 				float fatt = min(1.0, 1.0/(c1 + c2*distance + c3*(distance * distance)));
+				vec3 fColor3;
+				if(hasTX == 1.0)
+				{
+				fColor3 = vec3(0.2,0.2,0.2)*vec3(diffuseColor)+fatt*(vec3(0.5,0.5,0.5)*vec3(diffuse)*max(0.0, dot(lightV, cNor)))+(vec3(0.2,0.0,0.2)*vec3(0.2,1.0,1.0)*pow(max(dot(reflectV, viewV), 0.0), 1.0));
+				}
+				else {
+				fColor3 = vec3(0.2,0.2,0.2)*vec3(ambient)+fatt*(vec3(0.5,0.5,0.5)*vec3(diffuse)*max(0.0, dot(lightV, cNor)))+(vec3(0.2,0.0,0.2)*vec3(0.2,1.0,1.0)*pow(max(dot(reflectV, viewV), 0.0), 1.0));
+			}
 
-				vec3 fColor3 = vec3(diffuseColor);
 				//fColor = vec4(fColor3, 1.0);
 
 				gl_FragColor = vec4(fColor3, 1.0);
@@ -120,6 +132,8 @@
 		<script type="text/javascript" src="Objects/Vertex-Data/Grid_Beta.js">
 		</script>
 		<script type="text/javascript" src="Objects/Vertex-Data/Island_Beta2.js">
+		</script>
+		<script type="text/javascript" src="Objects/island_texturecoord.js">
 		</script>
 		<script type="text/javascript" src="Objects/Vertex-Data/palmtree.js">
 		</script>

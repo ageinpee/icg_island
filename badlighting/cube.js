@@ -22,7 +22,8 @@ let pointLoc,
 	ambientRLoc,
 	diffuseRLoc,
 	specularRLoc,
-	texCoordLoc;
+	texCoordLoc,
+	hasTextureLoc;
 
 let modelMatrixLoc;
 
@@ -44,6 +45,7 @@ class Island {
 		this.mesh = [];
 		this.normals = [];
 		this.textureCoordinates = [];
+		this.hasTexture = [];
 		this.ambientR = [];
 		this.diffuseR = [];
 		this.orientation = {x: 0, y: 0, z: 0};
@@ -77,6 +79,7 @@ class Island {
 		
 		for (var i=0; i<this.mesh.length/3; i++)
 		{
+			this.hasTexture = this.hasTexture.concat([1.0]);
 			this.ambientR = this.ambientR.concat([0.9,0.6,0.2,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.47,0.25,0.01,1.0]);
 		}
@@ -92,16 +95,17 @@ class Island {
 		//		0|0 -------- 0|1
 		//
 		// Im Zweifel: Texturkoordinaten berechnen lassen per Blender
-		
-		for (var x in this.mesh) {
-			if (x % 3 != 0) {
-				var temp = (this.mesh[x] + 1) / 2;
-				this.textureCoordinates = this.textureCoordinates.concat(temp);
-			}
-		}
-		console.log(this.mesh);
-		console.log(this.textureCoordinates);
-	}
+		console.log(this.mesh.length)
+		for (var i=0; i < this.mesh.length/18; i++) {
+ 			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
+ 																	  0.0, 0.0,
+ 																	  1.0, 0.0]);
+ 			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
+ 																	  1.0, 1.0,
+ 																	  1.0, 0.0]);
+ 		}
+  	}
+	
 	
 	/**
 	 * Sets the model matrix
@@ -133,7 +137,7 @@ class Island {
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.colorVBO);
 
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.ambientR.concat(this.diffuseR)), gl.STATIC_DRAW);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.ambientR.concat(this.diffuseR.concat(this.hasTexture))), gl.STATIC_DRAW);
 
 	}
 
@@ -150,8 +154,10 @@ class Island {
 
 		gl.vertexAttribPointer(ambientRLoc, 4, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(diffuseRLoc, 4, gl.FLOAT, false, 0, this.ambientR.length*4);
+		gl.vertexAttribPointer(hasTextureLoc, 1, gl.FLOAT, false, 0, (this.ambientR.length+this.diffuseR.length)*4)
 		gl.enableVertexAttribArray(ambientRLoc);
 		gl.enableVertexAttribArray(diffuseRLoc);
+		gl.enableVertexAttribArray(hasTextureLoc);
 		// Bind the program and the vertex buffer object
 		
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
@@ -180,6 +186,7 @@ class Ocean {
 		this.textureCoordinates = [];
 		this.ambientR = [];
 		this.diffuseR = [];
+		this.hasTexture = [];
 		this.orientation = {x: 0, y: 0, z: 0};
 		this.position = {x: 0, y: -0.86, z: 0};
 		this.verticesVBO = gl.createBuffer();
@@ -198,6 +205,7 @@ class Ocean {
 		this.mesh = this.mesh.concat(ocean);
 		
 		for (var i = 0; i < ocean_normals.length; i+=3){
+
 			this.normals = this.normals.concat(ocean_normals[i]);
 			this.normals = this.normals.concat(ocean_normals[i+1]);
 			this.normals = this.normals.concat(ocean_normals[i+2]);
@@ -213,6 +221,7 @@ class Ocean {
 		{
 			this.ambientR = this.ambientR.concat([0.05,0.3,0.5,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.01,0.52,0.53,1.0]);
+			this.hasTexture = this.hasTexture.concat([0.0]);
 		}
 		
 		this.textureCoordinates = this.mesh;
@@ -252,7 +261,7 @@ class Ocean {
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.colorVBO);
 
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.ambientR.concat(this.diffuseR)), gl.STATIC_DRAW);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.ambientR.concat(this.diffuseR.concat(this.hasTexture))), gl.STATIC_DRAW);
 	}
 
 	/**
@@ -269,8 +278,10 @@ class Ocean {
 
 		gl.vertexAttribPointer(ambientRLoc, 4, gl.FLOAT, false, 0,0);
 		gl.vertexAttribPointer(diffuseRLoc, 4, gl.FLOAT, false, 0, this.ambientR.length*4);
+		gl.vertexAttribPointer(hasTextureLoc, 1, gl.FLOAT, false, 0, (this.ambientR.length+this.diffuseR.length)*4);
 		gl.enableVertexAttribArray(ambientRLoc);
 		gl.enableVertexAttribArray(diffuseRLoc);
+		gl.enableVertexAttribArray(hasTextureLoc);
 		
 		// Bind the program and the vertex buffer object
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
@@ -299,6 +310,7 @@ class Palmtree {
 		this.textureCoordinates = [];
 		this.ambientR = [];
 		this.diffuseR = [];
+		this.hasTexture = [];
 		this.orientation = {x: -90, y: 0, z: 0};
 		this.position = {x: 0, y: -0.9, z: 0};
 		this.verticesVBO = gl.createBuffer();
@@ -332,6 +344,7 @@ class Palmtree {
 		{
 			this.ambientR = this.ambientR.concat([0.33,0.21,0.1,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.46,0.26,0.09,1.0]);
+			this.hasTexture = this.hasTexture.concat([0.0]);
 		}
 		
 		this.textureCoordinates = this.mesh;
@@ -374,7 +387,7 @@ class Palmtree {
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.colorVBO);
 
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.ambientR.concat(this.diffuseR)), gl.STATIC_DRAW);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.ambientR.concat(this.diffuseR.concat(this.hasTexture))), gl.STATIC_DRAW);
 	}
 
 	/**
@@ -390,8 +403,10 @@ class Palmtree {
 
 		gl.vertexAttribPointer(ambientRLoc, 4, gl.FLOAT, false, 0,0);
 		gl.vertexAttribPointer(diffuseRLoc, 4, gl.FLOAT, false, 0, this.ambientR.length*4);
+		gl.vertexAttribPointer(hasTextureLoc, 1, gl.FLOAT, false, 0, (this.ambientR.length+this.diffuseR.length)*4);
 		gl.enableVertexAttribArray(ambientRLoc);
 		gl.enableVertexAttribArray(diffuseRLoc);
+		gl.enableVertexAttribArray(hasTextureLoc);
 		// Bind the program and the vertex buffer object
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
 
@@ -420,6 +435,7 @@ class Palmleaf {
 		this.textureCoordinates = [];
 		this.ambientR = [];
 		this.diffuseR = [];
+		this.hasTexture = [];
 		this.orientation = orientation;
 		this.position = position;
 		this.colorVBO = gl.createBuffer();
@@ -453,6 +469,7 @@ class Palmleaf {
 		{
 			this.ambientR = this.ambientR.concat([0.0,0.7,0.0,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.37,0.01,0.69,1.0]);
+			this.hasTexture = this.hasTexture.concat([0.0]);
 		}
 
 		this.textureCoordinates = this.mesh;
@@ -491,7 +508,7 @@ class Palmleaf {
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.colorVBO);
 
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.ambientR.concat(this.diffuseR)), gl.STATIC_DRAW);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.ambientR.concat(this.diffuseR.concat(this.hasTexture))), gl.STATIC_DRAW);
 	}
 
 	/**
@@ -517,8 +534,10 @@ class Palmleaf {
 
 		gl.vertexAttribPointer(ambientRLoc, 4, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(diffuseRLoc, 4,gl.FLOAT,false, 0, this.ambientR.length*4);
+		gl.vertexAttribPointer(hasTextureLoc, 1, gl.FLOAT,false, 0, (this.ambientR.length+this.diffuseR.length)*4);
 		gl.enableVertexAttribArray(ambientRLoc);
 		gl.enableVertexAttribArray(diffuseRLoc);
+		gl.enableVertexAttribArray(hasTextureLoc);
 
 		// Set uniforms
 		this.UpdateBuffer();
@@ -587,6 +606,7 @@ function init() {
 	texCoordLoc = gl.getAttribLocation(program, "vTexCoord");
 	ambientRLoc = gl.getAttribLocation(program, "ambientR");
 	diffuseRLoc = gl.getAttribLocation(program, "diffuseR");
+	hasTextureLoc = gl.getAttribLocation(program, "hasTexture");
 	modelMatrixLoc = gl.getUniformLocation(program, "modelMatrix");
 	
 	diffuseMapLoc = gl.getUniformLocation(program, "diffuseMap");
