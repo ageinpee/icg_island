@@ -18,20 +18,22 @@
 			uniform mat4 normalMatrix;
 			
 			varying vec2 fTexCoord;
-
-			//varying mat4 normalMatrix;
 			
 			const vec4 lightSource = vec4(1.0,-2.0,-2.0,1.0);
 
+			varying mat4 normalMatrix1;
 			varying vec4 fColor;
 			varying vec3 cNor;
 			varying vec3 cPos;
 			varying vec3 cLight;
 			varying vec4 ambient;
 			varying vec4 diffuse;
+			varying vec4 fNormal;
 
 			void main()
 			{
+				fNormal = vec4(cNor, 1.0); 
+				normalMatrix1 = normalMatrix;
 				ambient = ambientR;
 				diffuse = diffuseR;
 				
@@ -42,12 +44,9 @@
 				vec4 position = modelViewMatrix * vPosition;
 				gl_Position = projectionMatrix * position;
 
-				// normalMatrix = transpose(inverse(modelViewMatrix));
-
 				vec4 cPos4 = modelViewMatrix * vPosition;
 				cPos = vec3(cPos4);
 				cNor = vNormal * mat3(normalMatrix);
-				//vec3 cNor = vNormal * mat3(modelViewMatrix);
 
 				vec4 cLight4 = viewMatrix * lightSource;
 				cLight = vec3(cLight4);
@@ -63,7 +62,7 @@
 			varying vec4 ambient;
 			varying vec4 diffuse;
 			
-			uniform mat4 normalMatrix;
+			varying mat4 normalMatrix1;
 			varying vec4 fNormal;
 			
 			uniform sampler2D diffuseMap;
@@ -84,9 +83,9 @@
 				} else {
 					tangent = normalize(t2);
 				}
-				vec3 n = normalize((normalMatrix * fNormal).xyz);
-				vec3 t = normalize((normalMatrix * vec4(tangent, 1.0)).xyz);
-				vec3 b = cross(n, t);
+				vec3 n1 = normalize((normalMatrix1 * fNormal).xyz);
+				vec3 t = normalize((normalMatrix1 * vec4(tangent, 1.0)).xyz);
+				vec3 b = cross(n1, t);
 				
 				vec3 lightV = normalize(cLight - cPos);
 				vec3 reflectV = reflect(-lightV, cNor);
@@ -95,7 +94,7 @@
 				float distance = length(cLight - cPos);
 				float fatt = min(1.0, 1.0/(c1 + c2*distance + c3*(distance * distance)));
 
-				vec3 fColor3 = vec3(0.4,0.4,0.4)*vec3(ambient)+fatt*(vec3(0.2,0.2,0.2)*vec3(diffuse)*max(0.0, dot(lightV, cNor)))+(vec3(1.0,0.0,1.0)*vec3(0.2,1.0,1.0)*pow(max(dot(reflectV, viewV), 0.0), n));
+				vec3 fColor3 = vec3(0.4,0.4,0.4)*vec3(ambient)+fatt*(vec3(0.2,0.2,0.2)*vec3(diffuse)*max(0.0, dot(lightV, cNor))+(vec3(1.0,0.0,1.0)*vec3(0.2,1.0,1.0)*pow(max(dot(reflectV, viewV), 0.0), n)));
 				//fColor = vec4(fColor3, 1.0);
 
 				gl_FragColor = vec4(fColor3, 1.0);
