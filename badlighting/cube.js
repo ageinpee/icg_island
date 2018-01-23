@@ -66,15 +66,15 @@ class Island {
 		this.mesh = this.mesh.concat(island);
 		
 		for (var i = 0; i < island_normals.length; i+=3){
-			this.normals = this.normals.concat(-island_normals[i]);
-			this.normals = this.normals.concat(-island_normals[i+1]);
-			this.normals = this.normals.concat(-island_normals[i+2]);
-			this.normals = this.normals.concat(-island_normals[i]);
-			this.normals = this.normals.concat(-island_normals[i+1]);
-			this.normals = this.normals.concat(-island_normals[i+2]);
-			this.normals = this.normals.concat(-island_normals[i]);
-			this.normals = this.normals.concat(-island_normals[i+1]);
-			this.normals = this.normals.concat(-island_normals[i+2]);
+			this.normals = this.normals.concat(island_normals[i]);
+			this.normals = this.normals.concat(island_normals[i+1]);
+			this.normals = this.normals.concat(island_normals[i+2]);
+			this.normals = this.normals.concat(island_normals[i]);
+			this.normals = this.normals.concat(island_normals[i+1]);
+			this.normals = this.normals.concat(island_normals[i+2]);
+			this.normals = this.normals.concat(island_normals[i]);
+			this.normals = this.normals.concat(island_normals[i+1]);
+			this.normals = this.normals.concat(island_normals[i+2]);
 		}
 		
 		for (var i=0; i<this.mesh.length/3; i++)
@@ -88,7 +88,7 @@ class Island {
 		// Versuch: Texturkoordinaten = Mesh setzen. Welches Ergebnis? 
 		// Versuch: Texturkoordinaten = (1|0),(0|0),(0|1) oder (1|1) setzen. Welches Ergebnis?
 		//
-		//		1|0 -------- 1|0
+		//		1|0 -------- 1|1
 		//			|      |
 		//			|      |
 		//			|      |
@@ -100,6 +100,7 @@ class Island {
  			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
  																	  0.0, 0.0,
  																	  1.0, 0.0]);
+ 
  		}
   	}
 	
