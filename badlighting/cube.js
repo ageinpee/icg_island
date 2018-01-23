@@ -66,22 +66,22 @@ class Island {
 		this.mesh = this.mesh.concat(island);
 		
 		for (var i = 0; i < island_normals.length; i+=3){
-			this.normals = this.normals.concat(island_normals[i]);
-			this.normals = this.normals.concat(island_normals[i+1]);
-			this.normals = this.normals.concat(island_normals[i+2]);
-			this.normals = this.normals.concat(island_normals[i]);
-			this.normals = this.normals.concat(island_normals[i+1]);
-			this.normals = this.normals.concat(island_normals[i+2]);
-			this.normals = this.normals.concat(island_normals[i]);
-			this.normals = this.normals.concat(island_normals[i+1]);
-			this.normals = this.normals.concat(island_normals[i+2]);
+			this.normals = this.normals.concat(-island_normals[i]);
+			this.normals = this.normals.concat(-island_normals[i+1]);
+			this.normals = this.normals.concat(-island_normals[i+2]);
+			this.normals = this.normals.concat(-island_normals[i]);
+			this.normals = this.normals.concat(-island_normals[i+1]);
+			this.normals = this.normals.concat(-island_normals[i+2]);
+			this.normals = this.normals.concat(-island_normals[i]);
+			this.normals = this.normals.concat(-island_normals[i+1]);
+			this.normals = this.normals.concat(-island_normals[i+2]);
 		}
 		
 		for (var i=0; i<this.mesh.length/3; i++)
 		{
 			this.hasTexture = this.hasTexture.concat([1.0]);
 			this.ambientR = this.ambientR.concat([0.9,0.6,0.2,1.0]);
-			this.diffuseR = this.diffuseR.concat([0.47,0.25,0.01,1.0]);
+			this.diffuseR = this.diffuseR.concat([0.67,0.35,0.01,1.0]);
 		}
 		
 		// this.textureCoordinates = ...
@@ -96,12 +96,9 @@ class Island {
 		//
 		// Im Zweifel: Texturkoordinaten berechnen lassen per Blender
 		console.log(this.mesh.length)
-		for (var i=0; i < this.mesh.length/18; i++) {
+		for (var i=0; i < this.mesh.length/9; i++) {
  			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
  																	  0.0, 0.0,
- 																	  1.0, 0.0]);
- 			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
- 																	  1.0, 1.0,
  																	  1.0, 0.0]);
  		}
   	}
