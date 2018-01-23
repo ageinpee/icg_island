@@ -81,14 +81,14 @@ class Island {
 		{
 			this.hasTexture = this.hasTexture.concat([1.0]);
 			this.ambientR = this.ambientR.concat([0.9,0.6,0.2,1.0]);
-			this.diffuseR = this.diffuseR.concat([0.47,0.25,0.01,1.0]);
+			this.diffuseR = this.diffuseR.concat([0.67,0.35,0.01,1.0]);
 		}
 		
 		// this.textureCoordinates = ...
 		// Versuch: Texturkoordinaten = Mesh setzen. Welches Ergebnis? 
 		// Versuch: Texturkoordinaten = (1|0),(0|0),(0|1) oder (1|1) setzen. Welches Ergebnis?
 		//
-		//		1|0 -------- 1|0
+		//		1|0 -------- 1|1
 		//			|      |
 		//			|      |
 		//			|      |
@@ -96,13 +96,11 @@ class Island {
 		//
 		// Im Zweifel: Texturkoordinaten berechnen lassen per Blender
 		console.log(this.mesh.length)
-		for (var i=0; i < this.mesh.length/18; i++) {
+		for (var i=0; i < this.mesh.length/9; i++) {
  			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
  																	  0.0, 0.0,
  																	  1.0, 0.0]);
- 			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
- 																	  1.0, 1.0,
- 																	  1.0, 0.0]);
+ 
  		}
   	}
 	

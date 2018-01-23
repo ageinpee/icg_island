@@ -106,10 +106,10 @@
 				vec3 fColor3;
 				if(hasTX == 1.0)
 				{
-				fColor3 = vec3(0.4,0.4,0.4)*vec3(ambientTex)+fatt*(vec3(0.5,0.5,0.5)*vec3(diffuse)*max(0.0, dot(lightV, vec3(normalTex))))+(vec3(0.2,0.0,0.2)*vec3(0.2,1.0,1.0)*pow(max(dot(reflectV, viewV), 0.0), 1.0));
+				fColor3 = vec3(0.4,0.3,0.15)*vec3(ambientTex)+fatt*(vec3(0.5,0.5,0.5)*vec3(diffuse)*max(0.0, dot(lightV, vec3(normalTex))))+(vec3(0.2,0.2,0.2)*vec3(0.2,0.4,0.6)*pow(max(dot(reflectV, viewV), 0.0), 1.0));
 				}
 				else {
-				fColor3 = vec3(0.4,0.4,0.4)*vec3(ambient)+fatt*(vec3(0.5,0.5,0.5)*vec3(diffuse)*max(0.0, dot(lightV, cNor)))+(vec3(0.2,0.0,0.2)*vec3(0.2,1.0,1.0)*pow(max(dot(reflectV, viewV), 0.0), 1.0));
+				fColor3 = vec3(0.4,0.3,0.15)*vec3(ambient)+fatt*(vec3(0.5,0.5,0.5)*vec3(diffuse)*max(0.0, dot(lightV, cNor)))+(vec3(0.2,0.0,0.2)*vec3(0.2,1.0,1.0)*pow(max(dot(reflectV, viewV), 0.0), 1.0));
 			}
 
 				//fColor = vec4(fColor3, 1.0);
