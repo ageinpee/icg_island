@@ -25,6 +25,8 @@ let pointLoc,
 	texCoordLoc,
 	hasTextureLoc;
 
+let timer = 0.0;
+
 let modelMatrixLoc;
 
 let viewMatrixLoc,
@@ -66,15 +68,15 @@ class Island {
 		this.mesh = this.mesh.concat(island);
 		
 		for (var i = 0; i < island_normals.length; i+=3){
-			this.normals = this.normals.concat(island_normals[i]);
-			this.normals = this.normals.concat(island_normals[i+1]);
-			this.normals = this.normals.concat(island_normals[i+2]);
-			this.normals = this.normals.concat(island_normals[i]);
-			this.normals = this.normals.concat(island_normals[i+1]);
-			this.normals = this.normals.concat(island_normals[i+2]);
-			this.normals = this.normals.concat(island_normals[i]);
-			this.normals = this.normals.concat(island_normals[i+1]);
-			this.normals = this.normals.concat(island_normals[i+2]);
+			this.normals = this.normals.concat(-island_normals[i]);
+			this.normals = this.normals.concat(-island_normals[i+1]);
+			this.normals = this.normals.concat(-island_normals[i+2]);
+			this.normals = this.normals.concat(-island_normals[i]);
+			this.normals = this.normals.concat(-island_normals[i+1]);
+			this.normals = this.normals.concat(-island_normals[i+2]);
+			this.normals = this.normals.concat(-island_normals[i]);
+			this.normals = this.normals.concat(-island_normals[i+1]);
+			this.normals = this.normals.concat(-island_normals[i+2]);
 		}
 		
 		for (var i=0; i<this.mesh.length/3; i++)
@@ -88,7 +90,7 @@ class Island {
 		// Versuch: Texturkoordinaten = Mesh setzen. Welches Ergebnis? 
 		// Versuch: Texturkoordinaten = (1|0),(0|0),(0|1) oder (1|1) setzen. Welches Ergebnis?
 		//
-		//		1|0 -------- 1|1
+		//		1|0 -------- 1|0
 		//			|      |
 		//			|      |
 		//			|      |
@@ -100,7 +102,6 @@ class Island {
  			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
  																	  0.0, 0.0,
  																	  1.0, 0.0]);
- 
  		}
   	}
 	
@@ -186,7 +187,7 @@ class Ocean {
 		this.diffuseR = [];
 		this.hasTexture = [];
 		this.orientation = {x: 0, y: 0, z: 0};
-		this.position = {x: 0, y: -0.86, z: 0};
+		this.position = {x: 0, y: -0.9, z: 0};
 		this.verticesVBO = gl.createBuffer();
 		this.colorVBO = gl.createBuffer();
 		this.modelMatrix = this.SetModelMatrix(this.position, this.orientation);
@@ -200,19 +201,22 @@ class Ocean {
 	 */
 	MakeModel () {
 		//adding the Ocean-Positions to the Mesh. 
-		this.mesh = this.mesh.concat(ocean);
+		//this.mesh = this.mesh.concat(ocean);
 		
-		for (var i = 0; i < ocean_normals.length; i+=3){
+		for(var i = -1.0; i<1; i+=(1/25)) {
+			for(var j = -1.0; j<1; j+=(1/25)) {
+				this.mesh = this.mesh.concat(i, 0.0, j);
+				this.mesh = this.mesh.concat(i+(1/25), 0.0, j);
+				this.mesh = this.mesh.concat(i+(1/25), 0.0, j+(1/25));
+				this.mesh = this.mesh.concat(i, 0.0, j);
+				this.mesh = this.mesh.concat(i, 0.0, j+(1/25));
+				this.mesh = this.mesh.concat(i+(1/25), 0.0, j+(1/25));
+			}
+		}
+		
+		for (var i = 0; i < this.mesh.length; i+=3){
 
-			this.normals = this.normals.concat(ocean_normals[i]);
-			this.normals = this.normals.concat(ocean_normals[i+1]);
-			this.normals = this.normals.concat(ocean_normals[i+2]);
-			this.normals = this.normals.concat(ocean_normals[i]);
-			this.normals = this.normals.concat(ocean_normals[i+1]);
-			this.normals = this.normals.concat(ocean_normals[i+2]);
-			this.normals = this.normals.concat(ocean_normals[i]);
-			this.normals = this.normals.concat(ocean_normals[i+1]);
-			this.normals = this.normals.concat(ocean_normals[i+2]);
+			this.normals = this.normals.concat(0.0,1.0,0.0);
 		}
 		
 		for (var i = 0; i < this.mesh.length/3; i++)
@@ -267,7 +271,7 @@ class Ocean {
 	 */
 	UpdateBuffer () {
 		// Push the matrix to the buffer
-		gl.uniformMatrix4fv(modelMatrixLoc, false, new Float32Array(this.modelMatrix));		
+		gl.uniformMatrix4fv(modelMatrixLoc, false, new Float32Array(this.modelMatrix));	
 	}
 
 	Render () {
@@ -638,7 +642,12 @@ function init() {
 
 function render()
 {
+	
 	gl.clear(gl.normal_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	timerLoc = gl.getUniformLocation(program, "timer");
+	gl.uniform1f(timerLoc, 0);
+	timer += 1;
+	console.log(timer);
 	
 	// Connect Maps to Shader
 	gl.activeTexture(gl.TEXTURE0);

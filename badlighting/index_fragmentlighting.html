@@ -17,8 +17,10 @@
 			uniform mat4 projectionMatrix;
 
 			uniform mat4 normalMatrix;
+			uniform float timer;
 			
 			varying vec2 fTexCoord;
+			varying vec4 vPosition1;
 			
 			const vec4 lightSource = vec4(1.0,-2.0,-2.0,1.0);
 
@@ -34,6 +36,7 @@
 
 			void main()
 			{
+				vPosition1 = vPosition;
 				fNormal = vec4(cNor, 0.0); 
 				fnormalMatrix = normalMatrix;
 				ambient = ambientR;
@@ -42,15 +45,17 @@
 				
 				// Pass tex coords to fragment shader
                 fTexCoord = vTexCoord;
-
+				
+				vPosition1.y = vPosition1.y + sin(timer);
+				
 				mat4 modelViewMatrix = viewMatrix * modelMatrix;
-				vec4 position = modelViewMatrix * vPosition;
+				vec4 position = modelViewMatrix * vPosition1;
 				gl_Position = projectionMatrix * position;
 
-				vec4 cPos4 = modelViewMatrix * vPosition;
+				vec4 cPos4 = modelViewMatrix * vPosition1;
 				cPos = vec3(cPos4);
 				cNor = vNormal * mat3(normalMatrix);
-
+				
 				vec4 cLight4 = viewMatrix * lightSource;
 				cLight = vec3(cLight4);
 			}
@@ -147,6 +152,8 @@
 		<script type="text/javascript" src="Objects/Vertex-Data/Grid_Beta.js">
 		</script>
 		<script type="text/javascript" src="Objects/Vertex-Data/Island_Beta2.js">
+		</script>
+		<script type="text/javascript" src="Objects/island_texturecoord.js">
 		</script>
 		<script type="text/javascript" src="Objects/Vertex-Data/palmtree.js">
 		</script>
