@@ -223,7 +223,7 @@ class Ocean {
 		{
 			this.ambientR = this.ambientR.concat([0.05,0.3,0.5,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.01,0.52,0.53,1.0]);
-			this.hasTexture = this.hasTexture.concat([0.0]);
+			this.hasTexture = this.hasTexture.concat([2.0]);
 		}
 		
 		this.textureCoordinates = this.mesh;
@@ -621,8 +621,8 @@ function init() {
 	// 3. Specify vertices
 	objects.push(new Island());	
 	objects.push(new Ocean());
-	//objects.push(new Palmtree());
-	//objects.push(new Palmleaf({x: -90, y: 0, z:0},{x: -0.02, y: -0.3, z: -0.09}));
+	objects.push(new Palmtree());
+	objects.push(new Palmleaf({x: -90, y: 0, z:0},{x: -0.02, y: -0.3, z: -0.09}));
 
 	// 4. Init shader program via additional function and bind it
 	program = initShaders(gl, "vertex-shader", "fragment-shader");
