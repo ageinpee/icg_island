@@ -667,14 +667,13 @@ function render()
 	
 	gl.clear(gl.normal_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	timerLoc = gl.getUniformLocation(program, "timer");
-<<<<<<< HEAD
+
 	gl.uniform1f(timerLoc, 0);
 	timer += 1;
-=======
+
 	gl.uniform1f(timerLoc, timer);
 	timer = (timer + 0.02) % 189.0;
 	//console.log(Math.sin(timer));
->>>>>>> f420ed36b296898c4f94dae145cbae9606864634
 	
 	// Connect Maps to Shader
 	gl.activeTexture(gl.TEXTURE0);
