@@ -65,17 +65,6 @@ class Island {
 	 */
 	MakeModel () {
 		//adding the Islands-Positions to the Mesh. 
-		for (var i = 0; i < island_looporder.length; i++) {
-			this.mesh = this.mesh.concat(island[6 * (island_looporder[i])]);
-			this.mesh = this.mesh.concat(island[6 * (island_looporder[i]) + 1]);
-			this.mesh = this.mesh.concat(island[6 * (island_looporder[i]) + 2]);
-			
-			this.normals = this.normals.concat(island[6 * (island_looporder[i]) + 3]);
-			this.normals = this.normals.concat(island[6 * (island_looporder[i]) + 4]);
-			this.normals = this.normals.concat(island[6 * (island_looporder[i]) + 5]);
-		}
-		
-		/* 
 		this.mesh = this.mesh.concat(island);
 		
 		for (var i = 0; i < island_normals.length; i+=3){
@@ -88,7 +77,7 @@ class Island {
 			this.normals = this.normals.concat(-island_normals[i]);
 			this.normals = this.normals.concat(-island_normals[i+1]);
 			this.normals = this.normals.concat(-island_normals[i+2]);
-		} */
+		}
 		
 		for (var i=0; i<this.mesh.length/3; i++)
 		{
@@ -108,6 +97,7 @@ class Island {
 		//		0|0 -------- 0|1
 		//
 		// Im Zweifel: Texturkoordinaten berechnen lassen per Blender
+		console.log(this.mesh.length)
 		for (var i=0; i < this.mesh.length/9; i++) {
  			this.textureCoordinates = this.textureCoordinates.concat([0.0, 1.0,
  																	  0.0, 0.0,
@@ -233,7 +223,7 @@ class Ocean {
 		{
 			this.ambientR = this.ambientR.concat([0.05,0.3,0.5,1.0]);
 			this.diffuseR = this.diffuseR.concat([0.01,0.52,0.53,1.0]);
-			this.hasTexture = this.hasTexture.concat([2.0]);
+			this.hasTexture = this.hasTexture.concat([0.0]);
 		}
 		
 		this.textureCoordinates = this.mesh;
@@ -353,6 +343,30 @@ class Palmtree {
 			this.normals = this.normals.concat(palmtree[6 * (palmtree_looporder[i]) + 4]);
 			this.normals = this.normals.concat(palmtree[6 * (palmtree_looporder[i]) + 5]);
 		}
+		/* for (var i = 0; i < palmtree.length; i+= 6) {
+			this.mesh = this.mesh.concat(palmtree[i]);
+			this.mesh = this.mesh.concat(palmtree[i+1]);
+			this.mesh = this.mesh.concat(palmtree[i+2]);
+			
+			this.normals = this.normals.concat(palmtree[i+3]);
+			this.normals = this.normals.concat(palmtree[i+4]);
+			this.normals = this.normals.concat(palmtree[i+5]);
+		} */
+		
+		
+		//this.mesh = this.mesh.concat(palmtree);
+		
+		//for (var i = 0; i < palmtree_normals.length; i+=3){
+		//	this.normals = this.normals.concat(palmtree_normals[i]);
+		//	this.normals = this.normals.concat(palmtree_normals[i+1]);
+		//	this.normals = this.normals.concat(palmtree_normals[i+2]);
+		//	this.normals = this.normals.concat(palmtree_normals[i]);
+		//	this.normals = this.normals.concat(palmtree_normals[i+1]);
+		//	this.normals = this.normals.concat(palmtree_normals[i+2]);
+		//	this.normals = this.normals.concat(palmtree_normals[i]);
+		//	this.normals = this.normals.concat(palmtree_normals[i+1]);
+		//	this.normals = this.normals.concat(palmtree_normals[i+2]);
+		//}
 		
 		for (var i = 0; i < this.mesh.length/3; i++)
 		{
@@ -465,18 +479,8 @@ class Palmleaf {
 	 */
 	MakeModel () {
 		//adding the leafs positions to the Mesh. 
-		for (var i = 0; i < palmleaf_looporder.length; i++) {
-			this.mesh = this.mesh.concat(palmleaf[(6 * palmleaf_looporder[i])]);
-			this.mesh = this.mesh.concat(palmleaf[(6 * palmleaf_looporder[i]) + 1]);
-			this.mesh = this.mesh.concat(palmleaf[(6 * palmleaf_looporder[i]) + 2]);
-			
-			this.normals = this.normals.concat(palmleaf[(6 * palmleaf_looporder[i]) + 3]);
-			this.normals = this.normals.concat(palmleaf[(6 * palmleaf_looporder[i]) + 4]);
-			this.normals = this.normals.concat(palmleaf[(6 * palmleaf_looporder[i]) + 5]);
-		}	
-		
-		/* 
 		this.mesh = this.mesh.concat(palmleaf);
+		
 		for (var i = 0; i < palmleaf_normals.length; i+=3){
 			this.normals = this.normals.concat(palmleaf_normals[i]);
 			this.normals = this.normals.concat(palmleaf_normals[i+1]);
@@ -487,7 +491,7 @@ class Palmleaf {
 			this.normals = this.normals.concat(palmleaf_normals[i]);
 			this.normals = this.normals.concat(palmleaf_normals[i+1]);
 			this.normals = this.normals.concat(palmleaf_normals[i+2]);
-		} */
+		}
 		
 		for(var i = 0; i < this.mesh.length/3; i++)
 		{
@@ -512,7 +516,7 @@ class Palmleaf {
 		let rotationQuat = quat.create();
 		quat.fromEuler(rotationQuat, orientation.x, orientation.y, orientation.z);
 		let translationVec = vec3.fromValues(position.x, position.y, position.z);
-		let scalingVec = vec3.fromValues(0.15, 0.15, 0.15);
+		let scalingVec = vec3.fromValues(0.07, 0.07, 0.07);
 		
 		let modelMatrix = mat4.create();
 		mat4.fromRotationTranslationScale(modelMatrix, rotationQuat, translationVec, scalingVec);
@@ -618,7 +622,7 @@ function init() {
 	objects.push(new Island());	
 	objects.push(new Ocean());
 	objects.push(new Palmtree());
-	objects.push(new Palmleaf({x: -90, y: 0, z:0},{x: 0.02, y: -0.45, z: -0.12}));
+	objects.push(new Palmleaf({x: -90, y: 0, z:0},{x: -0.02, y: -0.3, z: -0.09}));
 
 	// 4. Init shader program via additional function and bind it
 	program = initShaders(gl, "vertex-shader", "fragment-shader");
@@ -667,14 +671,9 @@ function render()
 	
 	gl.clear(gl.normal_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	timerLoc = gl.getUniformLocation(program, "timer");
-<<<<<<< HEAD
 	gl.uniform1f(timerLoc, 0);
 	timer += 1;
-=======
-	gl.uniform1f(timerLoc, timer);
-	timer = (timer + 0.02) % 189.0;
-	//console.log(Math.sin(timer));
->>>>>>> f420ed36b296898c4f94dae145cbae9606864634
+	console.log(timer);
 	
 	// Connect Maps to Shader
 	gl.activeTexture(gl.TEXTURE0);
