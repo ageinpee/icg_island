@@ -606,8 +606,8 @@ function init() {
 	// 3. Specify vertices
 	objects.push(new Island());	
 	objects.push(new Ocean());
-	objects.push(new Palmtree());
-	objects.push(new Palmleaf({x: -90, y: 0, z:0},{x: -0.02, y: -0.3, z: -0.09}));
+	//objects.push(new Palmtree());
+	//objects.push(new Palmleaf({x: -90, y: 0, z:0},{x: -0.02, y: -0.3, z: -0.09}));
 
 	// 4. Init shader program via additional function and bind it
 	program = initShaders(gl, "vertex-shader", "fragment-shader");
@@ -656,9 +656,9 @@ function render()
 	
 	gl.clear(gl.normal_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	timerLoc = gl.getUniformLocation(program, "timer");
-	gl.uniform1f(timerLoc, 0);
-	timer += 1;
-	console.log(timer);
+	gl.uniform1f(timerLoc, timer);
+	timer = (timer + 0.02) % 189.0;
+	//console.log(Math.sin(timer));
 	
 	// Connect Maps to Shader
 	gl.activeTexture(gl.TEXTURE0);

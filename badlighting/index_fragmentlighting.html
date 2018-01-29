@@ -46,7 +46,10 @@
 				// Pass tex coords to fragment shader
                 fTexCoord = vTexCoord;
 				
-				vPosition1.y = vPosition1.y + sin(timer);
+				if(hasTexture == 0.0)
+				{
+					vPosition1.y = sin(vPosition.x * 10.0 + timer) / 30.0;
+				}
 				
 				mat4 modelViewMatrix = viewMatrix * modelMatrix;
 				vec4 position = modelViewMatrix * vPosition1;
@@ -99,25 +102,22 @@
 				vec3 t = normalize((fnormalMatrix * vec4(tangent, 1.0)).xyz);
 				vec3 b = cross(n1, t);
 
-				mat3 tangentMat = mat3(n1.x, n1.y, n1.z,
-										b.x, b.y, b.z,
-										t.x, t.y, t.z);
-				
-				mat3 ttangentMat = mat3(t.x, b.x, n1.x,
-										t.y, b.y, n1.y,
-										t.y, b.y, n1.y);
+				mat3 TBN = mat3(t,b,n1);
 
 				vec4 normals = texture2D(normalMap, fTexCoord);
 				vec3 convNormals = normalize(normals.rgb * 2.0 - 1.0);
-
-				//vec3 camNormals = tangentMat * convNormals;
+				
+				//vec3 disNor = normalize(cross(dFdx(cNor),dFdy(cNor)));
 				
 				
 				vec3 lightV = normalize(cLight - cPos);
-				vec3 lV = normalize(ttangentMat * lightV);
+				//vec3 lV = normalize(ttangentMat * lightV);
+				vec3 lV = normalize(TBN * lightV);
+
 				vec3 reflectV = reflect(-lightV, cNor);
 				vec3 viewV = normalize(-cPos);
-				vec3 vV = normalize(ttangentMat * viewV);
+				//vec3 vV = normalize(ttangentMat * viewV);
+				vec3 vV = normalize(TBN * viewV);
 
 				vec4 diffuseColor = texture2D(diffuseMap, fTexCoord);
 				vec3 lightColor = vec3(1.0,1.0,1.0);
