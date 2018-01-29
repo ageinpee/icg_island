@@ -328,7 +328,22 @@ class Palmtree {
 	 */
 	MakeModel () {
 		//adding the palm-trees positions to the mesh 
-		for (var i = 0; i < palmtree.length; i+= 6) {
+		
+		for (var i = 0; i < palmtree_looporder.length; i++) {
+			this.mesh = this.mesh.concat(palmtree[6 * (palmtree_looporder[i])]);
+			this.mesh = this.mesh.concat(palmtree[6 * (palmtree_looporder[i]) + 1]);
+			this.mesh = this.mesh.concat(palmtree[6 * (palmtree_looporder[i]) + 2]);
+			
+			if ((6 * (palmtree[palmtree_looporder[i]]) + 3) == 0.0 &&
+				(6 * (palmtree[palmtree_looporder[i]]) + 4) == 0.0 &&
+				(6 * (palmtree[palmtree_looporder[i]]) + 5) == 0.0) {
+				console.log("0.0");
+			}				
+			this.normals = this.normals.concat(palmtree[6 * (palmtree_looporder[i]) + 3]);
+			this.normals = this.normals.concat(palmtree[6 * (palmtree_looporder[i]) + 4]);
+			this.normals = this.normals.concat(palmtree[6 * (palmtree_looporder[i]) + 5]);
+		}
+		/* for (var i = 0; i < palmtree.length; i+= 6) {
 			this.mesh = this.mesh.concat(palmtree[i]);
 			this.mesh = this.mesh.concat(palmtree[i+1]);
 			this.mesh = this.mesh.concat(palmtree[i+2]);
@@ -336,7 +351,7 @@ class Palmtree {
 			this.normals = this.normals.concat(palmtree[i+3]);
 			this.normals = this.normals.concat(palmtree[i+4]);
 			this.normals = this.normals.concat(palmtree[i+5]);
-		}
+		} */
 		
 		
 		//this.mesh = this.mesh.concat(palmtree);
